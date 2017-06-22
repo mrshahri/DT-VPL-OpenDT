@@ -23,31 +23,48 @@
     var three = THREE;
 
     var scene = new three.Scene();
-    var camera = new three.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+    var camera = new three.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
     var renderer = new three.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
 
+    var ambient = new THREE.AmbientLight(0x555555);
+    scene.add(ambient);
+
+    var light = new THREE.DirectionalLight(0xffffff);
+    light.position = camera.position;
+    scene.add(light);
+
     document.body.appendChild(renderer.domElement);
 
-     var geometry = new THREE.BoxBufferGeometry( 3, 3, 3 );
-     var edges = new THREE.EdgesGeometry( geometry );
-     var wireframe = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0xffffff } ) );
-    wireframe.rotation.x = Math.PI/4;
-    wireframe.rotation.y = Math.PI/4;
-     scene.add( wireframe );
-
-/*
-    var geometry = new three.CubeGeometry(2, 2, 2);
-    var geo = new THREE.WireframeGeometry( geometry );
-    var mat = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true } );
-    var wireframe = new three.Mesh(geo, mat);
-    wireframe.rotation.x = Math.PI/4;
-    wireframe.rotation.y = Math.PI/4;
+    var geometry = new THREE.BoxBufferGeometry(3, 3, 3);
+    var edges = new THREE.EdgesGeometry(geometry);
+    var wireframe = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({color: 0xffffff}));
+    wireframe.rotation.x = Math.PI / 4;
+    wireframe.rotation.y = Math.PI / 4;
     scene.add(wireframe);
-*/
+
+    var sphereGeometry = new THREE.SphereGeometry(0.1, 0.1, 0.1);
+    var sphereMaterial = new THREE.MeshBasicMaterial({color: 0xffff00});
+    var sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+    sphere.position.set(wireframe.position.x, wireframe.position.y, wireframe.position.z);
+    //    sphere.position.set(0, 0, 0);
+    wireframe.add(sphere);
 
     camera.position.z = 5;
+
+    // code for timer
+    var myVar = setInterval(getHeadPosition, 1000);
+    function getHeadPosition() {
+        $.getJSON("${monitorUrl}", {deviceId: "Ultimaker01"})
+            .done(function (data) {
+                console.log(data);
+                var x = data.xPosition;
+                var y = data.yPosition;
+                var z = data.zPosition;
+                sphere.position.set(x, y, z);
+            });
+    }
 
     /* */
     var isDragging = false;
@@ -55,17 +72,17 @@
         x: 0,
         y: 0
     };
-    $(renderer.domElement).on('mousedown', function(e) {
+    $(renderer.domElement).on('mousedown', function (e) {
         isDragging = true;
     })
-        .on('mousemove', function(e) {
+        .on('mousemove', function (e) {
             //console.log(e);
             var deltaMove = {
-                x: e.offsetX-previousMousePosition.x,
-                y: e.offsetY-previousMousePosition.y
+                x: e.offsetX - previousMousePosition.x,
+                y: e.offsetY - previousMousePosition.y
             };
 
-            if(isDragging) {
+            if (isDragging) {
 
                 var deltaRotationQuaternion = new three.Quaternion()
                     .setFromEuler(new three.Euler(
@@ -85,16 +102,16 @@
         });
     /* */
 
-    $(document).on('mouseup', function(e) {
+    $(document).on('mouseup', function (e) {
         isDragging = false;
     });
 
     // shim layer with setTimeout fallback
-    window.requestAnimFrame = (function(){
-        return  window.requestAnimationFrame ||
+    window.requestAnimFrame = (function () {
+        return window.requestAnimationFrame ||
             window.webkitRequestAnimationFrame ||
             window.mozRequestAnimationFrame ||
-            function(callback) {
+            function (callback) {
                 window.setTimeout(callback, 1000 / 60);
             };
     })();
@@ -108,7 +125,7 @@
         //wireframe.rotation.x += 1 * dt;
         //wireframe.rotation.y += 1 * dt;
 
-        setTimeout(function() {
+        setTimeout(function () {
             var currTime = new Date().getTime() / 1000;
             var dt = currTime - (lastFrameTime || currTime);
             totalGameTime += dt;
@@ -121,8 +138,6 @@
 
     function render() {
         renderer.render(scene, camera);
-
-
         requestAnimFrame(render);
     }
 
