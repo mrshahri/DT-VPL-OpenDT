@@ -58,10 +58,12 @@
     function getHeadPosition() {
         $.getJSON("${monitorUrl}", {deviceId: "Ultimaker01"})
             .done(function (data) {
-                console.log(data);
-                var x = data.xPosition;
-                var y = data.yPosition;
-                var z = data.zPosition;
+                var x = data.xPosition/100;
+                var y = data.yPosition/100;
+                var z = data.zPosition/110;
+                console.log("x=" + x);
+                console.log("y=" + y);
+                console.log("z=" + z);
                 sphere.position.set(x, y, z);
             });
     }

@@ -22,8 +22,8 @@ public class BaseController {
 
         model.addAttribute("message", "Welcome");
         model.addAttribute("counter", ++counter);
-//        model.addAttribute("monitorUrl", "http://uaf132854.ddns.uark.edu:9002/virtualization-uark/monitor?deviceId=Ultimaker01");
-        model.addAttribute("monitorUrl", "http://localhost:9002/virtualization-uark/monitor?deviceId=Ultimaker01");
+        model.addAttribute("monitorUrl", "http://uaf132854.ddns.uark.edu:9002/virtualization-uark/monitor");
+//        model.addAttribute("monitorUrl", "http://localhost:9002/virtualization-uark/monitor");
         logger.debug("[welcome] counter : {}", counter);
 
         // Spring uses InternalResourceViewResolver and return back index.jsp
