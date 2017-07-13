@@ -45,4 +45,9 @@ public class BaseController {
     public String test() {
         return "test";
     }
+
+    @RequestMapping(value = "/virtual", method = RequestMethod.GET)
+    public String virtunPrinter() {
+        return "virtual_printer";
+    }
 }
