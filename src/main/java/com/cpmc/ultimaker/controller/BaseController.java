@@ -19,16 +19,9 @@ public class BaseController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String welcome(ModelMap model) {
-
-        model.addAttribute("message", "Welcome");
-        model.addAttribute("counter", ++counter);
+        model.addAttribute("postUrl", "http://uaf132854.ddns.uark.edu:8100/app-ultimaker/operate-device");
         model.addAttribute("monitorUrl", "http://uaf132854.ddns.uark.edu:9002/virtualization-uark/monitor");
-//        model.addAttribute("monitorUrl", "http://localhost:9002/virtualization-uark/monitor");
-        logger.debug("[welcome] counter : {}", counter);
-
-        // Spring uses InternalResourceViewResolver and return back index.jsp
-        return VIEW_INDEX;
-
+        return "virtual_printer";
     }
 
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
@@ -47,7 +40,8 @@ public class BaseController {
     }
 
     @RequestMapping(value = "/virtual", method = RequestMethod.GET)
-    public String virtunPrinter() {
+    public String virtunPrinter(ModelMap model) {
+        model.addAttribute("monitorUrl", "http://uaf132854.ddns.uark.edu:9002/virtualization-uark/monitor");
         return "virtual_printer";
     }
 }
