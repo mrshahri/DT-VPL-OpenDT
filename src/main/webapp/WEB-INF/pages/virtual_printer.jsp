@@ -10,42 +10,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>THREE.js webgl - OBJLoader + MTLLoader</title>
+    <title>Monitor Ultimaker 3D</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <style>
-        body {
-            font-family: monospace;
-            background-color: #000;
-            color: #fff;
-            margin: 0px;
-            overflow: hidden;
+        #rcorners1 {
+            border-radius: 25px;
+            border: 2px solid darkblue;
+            background: wheat;
+            padding: 20px;
+            width: auto;
+            height: 400px;
         }
 
-        #info {
-            color: #fff;
-            position: absolute;
-            top: 10px;
-            width: 100%;
+        #rcorners2 {
+            border-radius: 25px;
+            border: 2px solid darkblue;
+            padding: 20px;
+            width: auto;
+            height: 200px;
+        }
+
+        .flex-container {
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-flow: row wrap;
+            flex-flow: row wrap;
             text-align: center;
-            z-index: 100;
-            display: block;
         }
 
-        #info a, .button {
-            color: #f00;
-            font-weight: bold;
-            text-decoration: underline;
-            cursor: pointer
+        .flex-container > * {
+            padding: 15px;
+            -webkit-flex: 1 100%;
+            flex: 1 100%;
         }
+
+        .article {
+            text-align: left;
+            border-radius: 25px;
+            border: 2px solid darkblue;
+        }
+
+        .aside {
+            position: relative;
+            float: left;
+            width: 195px;
+            top: 0px;
+            bottom: 0px;
+            background-color: #ebddca;
+            height: 100vh;
+        }
+
+        header {
+            background: black;
+            color: white;
+        }
+
+        footer {
+            background: #aaa;
+            color: white;
+        }
+
+        .nav {
+            background: #eee;
+        }
+
+        .nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .nav ul a {
+            text-decoration: none;
+        }
+
+        @media all and (min-width: 768px) {
+            .nav {
+                text-align: left;
+                -webkit-flex: 1 auto;
+                flex: 1 auto;
+                -webkit-order: 1;
+                order: 1;
+            }
+
+            .article {
+                -webkit-flex: 5 0px;
+                flex: 5 0px;
+                -webkit-order: 2;
+                order: 2;
+            }
+
+            footer {
+                -webkit-order: 3;
+                order: 3;
+            }
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover{background-color:#f5f5f5}
     </style>
+
+    <script>
+        function diagnosNetwork() {
+            var code = document.getElementById("code");
+            var level = document.getElementById("level");
+            var cause = document.getElementById("cause");
+            $.ajax({
+                url: "http://10.5.55.7:10090/ping",
+                dataType: "text",
+                success: function (data) {
+                },
+                complete: function (data) {
+                    console.log(data.responseText);
+                    if (data.responseText === "C1") {
+                        code.innerHTML = data.responseText;
+                        level.innerHTML = "WARNING";
+                        cause.innerHTML = "Adapter may not responding";
+                    } else if (data.responseText === "C2") {
+                        code.innerHTML = data.responseText;
+                        level.innerHTML = "ERROR";
+                        cause.innerHTML = "Machine not available";
+                    } else if (data.responseText === "NONE") {
+                        code.innerHTML = "N/A";
+                        level.innerHTML = "N/A";
+                        cause.innerHTML = "N/A";
+                    }
+                },
+                timeout: 12000  // two minutes
+            });
+        }
+    </script>
 </head>
 
 <body>
-<div>
-    <h1>Virtual 3D Printer</h1>
-    <input type="button" value="Print Clip" onclick="startPrinting('Clip')">
-    <input type="button" value="Print Platform" onclick="startPrinting('platform')">
+<div class="flex-container">
+    <header>
+        <h1>Ultimaker 3D Monitor and Diagnosis</h1>
+    </header>
+
+    <%--
+        <nav class="nav">
+        </nav>
+    --%>
+
+    <article class="article" id="article"></article>
+
+    <aside class="article">
+        <div id="rcorners2">
+            <table>
+                <tr>
+                    <th>Operations</th>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" class="btn btn-success" value="Print Clip Model File" onclick="startPrinting('Clip')">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" class="btn btn-success" value="Print Platform Model File" onclick="startPrinting('platform')">
+                    </td>
+                </tr>
+            </table>
+            <br/>
+        </div>
+        <br>
+        <div id="rcorners1">
+            <h4 style="text-align: center">Diagnostics</h4>
+            <p style="text-align: center">[GREEN = OK, YELLOW = WARNING, and RED = ERROR]</p>
+            <div id="diagnosticCheckLight" style="text-align: center; width: auto; height: 75px;
+                        background-color: green; border: 3px; border-color: black;
+                                                border-radius: 25px"></div>
+            <br/>
+            <br/>
+            <div style="text-align: center">
+                <input type="button" class="btn btn-warning" value="Diagnose Network" onclick="diagnosNetwork()">
+            </div>
+            <br>
+            <br>
+            <div>
+                <table>
+                    <tr>
+                        <th>Code</th>
+                        <th>Level</th>
+                        <th>Cause</th>
+                    </tr>
+                    <tr>
+                        <td><p id="code"></p></td>
+                        <td><p id="level"></p></td>
+                        <td><p id="cause"></p></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </aside>
+
+    <footer>Copyright &copy; University of Arkansas</footer>
 </div>
 
 
@@ -80,8 +251,9 @@
 
     function init() {
 
-        container = document.createElement('div');
-        document.body.appendChild(container);
+//        container = document.createElement('div');
+//        document.body.appendChild(container);
+        container = document.getElementById('article');
 
         camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 2000);
         camera.position.z = 0.5;
@@ -162,7 +334,7 @@
                 object.position.z = -0.15;
 
                 var quaternion = new THREE.Quaternion();
-                quaternion.setFromAxisAngle( new THREE.Vector3( -1, 0, 0 ), Math.PI / 2 );
+                quaternion.setFromAxisAngle(new THREE.Vector3(-1, 0, 0), Math.PI / 2);
                 object.applyQuaternion(quaternion);
                 craneArmObject = object;
 
@@ -185,7 +357,7 @@
                 object.position.z = -0.15;
 
                 var quaternion = new THREE.Quaternion();
-                quaternion.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), Math.PI / 2 );
+                quaternion.setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI / 2);
                 object.applyQuaternion(quaternion);
                 headObject = object;
 
@@ -197,7 +369,7 @@
         renderer = new THREE.WebGLRenderer();
         renderer.setClearColor(0xd3e3e1, 1);
         renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(window.innerWidth / 1.75, window.innerHeight / 1.75);
         container.appendChild(renderer.domElement);
 
         document.addEventListener('mousemove', onDocumentMouseMove, false);
@@ -238,7 +410,7 @@
 
         renderer.render(scene, camera);
     }
-    
+
     function moveHead(xv) {
         var x = 0.05 + 0.0015 * xv;
         var y = 0.2 - 0.0006 * xv;
@@ -280,8 +452,8 @@
     function getHeadPosition() {
         $.getJSON("${monitorUrl}", {deviceId: "Ultimaker01"})
             .done(function (data) {
-                var x = -data.yPosition/2;
-                var y = data.xPosition/2;
+                var x = -data.yPosition / 2;
+                var y = data.xPosition / 2;
                 var z = -data.zPosition * 70;
                 console.log("x=" + x + " | y=" + y + " | z=" + z);
 
@@ -311,9 +483,9 @@
     function startPrinting(name) {
         var parametersObj = {deviceId: "Ultimaker01", operationId: "startJob", parameters: []};
         var parameters = [];
-        parameters.push({id: "material", name: "", type: "value", value:"PLA"})
-        parameters.push({id: "quantity", name: "", type: "value", value:"1"})
-        parameters.push({id: "objName", name: "", type: "value", value:name})
+        parameters.push({id: "material", name: "", type: "value", value: "PLA"})
+        parameters.push({id: "quantity", name: "", type: "value", value: "1"})
+        parameters.push({id: "objName", name: "", type: "value", value: name})
         parametersObj.parameters = parameters;
         var requestBody = JSON.stringify(parametersObj);
         $.ajax({
@@ -410,6 +582,26 @@
     function toDegrees(angle) {
         return angle * (180 / Math.PI);
     }
+
+    function diagnosisCheck() {
+        var div = document.getElementById("diagnosticCheckLight");
+        $.ajax({
+            url: "http://10.5.54.23:8100/app-diagnostics-center/",
+            dataType: "text",
+            success: function (data) {
+            },
+            complete: function (data) {
+                if (data.responseText === 'WARNING') {
+                    div.style.backgroundColor = "yellow";
+                } else if (data.responseText === 'ERROR') {
+                    div.style.backgroundColor = "red";
+                } else {
+                    div.style.backgroundColor = "green";
+                }
+            }
+        });
+    }
+    window.setInterval(diagnosisCheck, 1000);
 
 </script>
 
