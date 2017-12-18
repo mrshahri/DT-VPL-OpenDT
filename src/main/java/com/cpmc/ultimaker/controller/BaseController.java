@@ -39,6 +39,11 @@ public class BaseController {
         return "test";
     }
 
+    @RequestMapping(value = "/collaboraction-diagnosis", method = RequestMethod.GET)
+    public String collaborationDiagnosis(ModelMap model) {
+        return "collaboration_fault_detection";
+    }
+
     @RequestMapping(value = "/virtual", method = RequestMethod.GET)
     public String virtunPrinter(ModelMap model) {
         model.addAttribute("monitorUrl", "http://uaf132854.ddns.uark.edu:9002/virtualization-uark/monitor");

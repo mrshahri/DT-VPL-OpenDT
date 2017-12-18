@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Monitor Ultimaker 3D</title>
+    <title>Collaboration Diagnostics Center</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
@@ -21,7 +21,7 @@
             background: wheat;
             padding: 20px;
             width: auto;
-            height: 425px;
+            height: 600px;
         }
 
         #rcorners2 {
@@ -29,7 +29,7 @@
             border: 2px solid darkblue;
             padding: 20px;
             width: auto;
-            height: 200px;
+            height: 250px;
         }
 
         .flex-container {
@@ -126,29 +126,32 @@
             var code = document.getElementById("code");
             var level = document.getElementById("level");
             var cause = document.getElementById("cause");
-            $.ajax({
-                url: "http://uaf132943.ddns.uark.edu:10090/ping",
-                dataType: "text",
-                success: function (data) {
-                },
-                complete: function (data) {
-                    console.log(data.responseText);
-                    if (data.responseText === "C1") {
-                        code.innerHTML = data.responseText;
-                        level.innerHTML = "WARNING";
-                        cause.innerHTML = "Agent-Adapter connection may not working";
-                    } else if (data.responseText === "C2") {
-                        code.innerHTML = data.responseText;
-                        level.innerHTML = "ERROR";
-                        cause.innerHTML = "Machine not found";
-                    } else if (data.responseText === "NONE") {
-                        code.innerHTML = "";
-                        level.innerHTML = "";
-                        cause.innerHTML = "";
-                    }
-                },
-                timeout: 12000  // two minutes
-            });
+
+            /*
+                        $.ajax({
+                            url: "https://10.5.55.7:10090/ping",
+                            dataType: "text",
+                            success: function (data) {
+                            },
+                            complete: function (data) {
+                                console.log(data.responseText);
+                                if (data.responseText === "C1") {
+                                    code.innerHTML = data.responseText;
+                                    level.innerHTML = "WARNING";
+                                    cause.innerHTML = "Agent-Adapter connection may not working";
+                                } else if (data.responseText === "C2") {
+                                    code.innerHTML = data.responseText;
+                                    level.innerHTML = "ERROR";
+                                    cause.innerHTML = "Machine not found";
+                                } else if (data.responseText === "NONE") {
+                                    code.innerHTML = "";
+                                    level.innerHTML = "";
+                                    cause.innerHTML = "";
+                                }
+                            },
+                            timeout: 12000  // two minutes
+                        });
+            */
         }
 
         function clearTable() {
@@ -165,7 +168,7 @@
 <body>
 <div class="flex-container">
     <header>
-        <h1>Ultimaker 3D Monitor and Diagnosis</h1>
+        <h3>Collaborative Manufacturing Diagnostics Center</h3>
     </header>
 
     <%--
@@ -173,9 +176,34 @@
         </nav>
     --%>
 
-    <article class="article" id="article"></article>
+    <article class="article" style="border: 2px solid darkblue;border-radius: 25px;" id="article">
+        <br/>
+        <br/>
+        <h4 style="text-align: center">Testbed Structure</h4>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <table>
+<%--
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+--%>
+            <tr>
+                <td><<img src="<c:url value="/resources/images/ultimaker.jpg"/>" height="200" width="200" alt="">></td>
+                <td><img src="<c:url value="/resources/images/red.png"/>" width="200" alt=""></td>
+                <td><img src="<c:url value="/resources/images/uarm.jpg"/>" height="200" width="200" alt=""></td>
+                <td><img src="<c:url value="/resources/images/green.png"/>" width="200" alt=""></td>
+                <td><img src="<c:url value="/resources/images/xc-750.png"/>" height="200" width="200" alt=""></td>
+            </tr>
+        </table>
+    </article>
 
     <aside class="article">
+<%--
         <div id="rcorners2">
             <table>
                 <tr>
@@ -183,48 +211,72 @@
                 </tr>
                 <tr>
                     <td>
-                        <input type="button" class="btn btn-success" value="Print Clip Model File" onclick="startPrinting('Clip')">
+                        <input type="button" class="btn btn-success" value="Test Ultimaker 3D Printer" onclick="">
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <input type="button" class="btn btn-success" value="Print Platform Model File" onclick="startPrinting('platform')">
+                        <input type="button" class="btn btn-success" value="Test UARM Robot" onclick="">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="button" class="btn btn-success" value="Test XCarve CNC" onclick="">
                     </td>
                 </tr>
             </table>
             <br/>
         </div>
-        <br>
+--%>
+        <%--<br>--%>
         <div id="rcorners1">
             <h4 style="text-align: center">Diagnostics</h4>
             <p style="text-align: center">[GREEN = OK, YELLOW = WARNING, and RED = ERROR]</p>
             <div id="diagnosticCheckLight" style="text-align: center; width: auto; height: 75px;
-                        background-color: green; border: 3px; border-color: black;
+                        background-color: yellow; border: 3px; border-color: black;
                                                 border-radius: 25px"></div>
             <br/>
-            <br/>
             <div style="text-align: center">
-                <input type="button" class="btn btn-warning" value="Diagnose Network" onclick="diagnosNetwork()">
+                <input type="button" class="btn btn-warning" value="Perform Collaboration Testing" onclick="diagnosNetwork()">
             </div>
-            <br>
-            <br>
+            <br/>
             <div>
+                <h5 style="text-align: center">Individual Machine Test Results</h5>
                 <table>
                     <tr>
+                        <th>Ultimaker2</th>
+                        <th>UARM</th>
+                        <th>XCarve</th>
+                    </tr>
+                    <tr>
+                        <td>Success</td>
+                        <td>Success</td>
+                        <td>Success</td>
+                    </tr>
+                </table>
+                <br/>
+                <h5 style="text-align: center">Detected Faults</h5>
+                <table>
+                    <tr>
+<%--
                         <th>
-                            <input type="button" class="btn btn-success" value="Clear" onclick="clearTable()" />
+                            <input type="button" class="btn btn-success" value="Clear History" onclick="clearTable()" />
                         </th>
-                        <th>Code</th>
-                        <th>Level</th>
+--%>
+                        <th>Fault Code</th>
+                        <th>Fault Level</th>
                         <th>Cause</th>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td><p id="code"></p></td>
-                        <td><p id="level"></p></td>
-                        <td><p id="cause"></p></td>
+                        <td><p id="code">EC001</p></td>
+                        <td><p id="level">ERROR</p></td>
+                        <td><p id="cause">Collaboration from Ultimaker to UARM failed</p></td>
                     </tr>
                 </table>
+            </div>
+            <br/>
+            <div style="text-align: center">
+                <input type="button" class="btn btn-basic" value="Clear History" onclick="clearTable()" />
             </div>
         </div>
     </aside>
@@ -245,7 +297,7 @@
 
 <script src="<c:url value="/resources/js/jquery-3.2.1.min.js"/>"></script>
 
-<script>
+<%--<script>
 
     var container, stats;
     var bedObject, headObject, craneArmObject, machineAssemblyObject;
@@ -597,6 +649,7 @@
     }
 
     function diagnosisCheck() {
+/*
         var div = document.getElementById("diagnosticCheckLight");
         $.ajax({
             url: "http://10.5.54.23:8100/app-diagnostics-center/",
@@ -613,10 +666,11 @@
                 }
             }
         });
+*/
     }
     window.setInterval(diagnosisCheck, 1000);
 
-</script>
+</script>--%>
 
 </body>
 </html>
