@@ -24,6 +24,13 @@ public class BaseController {
         return "virtual_printer";
     }
 
+    @RequestMapping(value = "/bukito", method = RequestMethod.GET)
+    public String welcome1(ModelMap model) {
+        model.addAttribute("postUrl", "http://uaf132854.ddns.uark.edu:9002/virtualization-uark/operate/device");
+        model.addAttribute("monitorUrl", "http://uaf132854.ddns.uark.edu:9002/virtualization-uark/monitor");
+        return "virtual_bukito";
+    }
+
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
     public String welcomeName(@PathVariable String name, ModelMap model) {
 
