@@ -557,8 +557,8 @@
         var SSChars = SS.split('');
 
         return yyyy + '-' + (mmChars[1]?mm:"0"+mmChars[0]) + '-' + (ddChars[1]?dd:"0"+ddChars[0]) +
-            'T' + (HHChars[1]?HH:"0"+HHChars[0] + ':' + (MMChars[1]?MM:"0"+MMChars[0]) + ':' + (SSChars[1]?SS:"0"+SSChars[0]) +
-                '.' + SSS);
+            'T' + (HHChars[1]?HH:"0"+HHChars[0]) + ':' + (MMChars[1]?MM:"0"+MMChars[0]) + ':'
+            + (SSChars[1]?SS:"0"+SSChars[0]) + '.' + SSS;
     }
 
     function getPrinterState() {
