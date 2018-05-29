@@ -243,8 +243,11 @@
             });
             if (operationId === 'reset') {
                 document.getElementById("myRangeX").value = "0";
+                document.getElementById("xVal").innerHTML = "0";
                 document.getElementById("myRangeY").value = "0";
+                document.getElementById("yVal").innerHTML = "0";
                 document.getElementById("myRangeZ").value = "0";
+                document.getElementById("zVal").innerHTML = "0";
             }
         }
 
@@ -384,7 +387,7 @@
                 <tr>
                     <td>
                         <div class="slidecontainer">
-                            <p style="color: darkblue">Move Nozzle (X-Axis) (<span id="xVal"></span>) </p>
+                            <p style="color: darkblue">Move Nozzle (X=<span id="xVal"></span>) </p>
                             <input type="range" min="0" max="130" value="0" class="slider" id="myRangeX" onchange="moveAxis('x', this.value)">
                         </div>
                     </td>
@@ -392,7 +395,7 @@
                 <tr>
                     <td>
                         <div class="slidecontainer">
-                            <p style="color: darkblue">Move Bed (Y-Axis) (<span id="yVal"></span>) </p>
+                            <p style="color: darkblue">Move Bed (Y=<span id="yVal"></span>) </p>
                             <input type="range" min="0" max="160" value="0" class="slider" id="myRangeY" onchange="moveAxis('y', this.value)">
                         </div>
                     </td>
@@ -400,7 +403,7 @@
                 <tr>
                     <td>
                         <div class="slidecontainer">
-                            <p style="color: darkblue">Move Z (<span id="zVal"></span>) </p>
+                            <p style="color: darkblue">Move Crane Arm (Z=<span id="zVal"></span>) </p>
                             <input type="range" min="0" max="120" value="0" class="slider" id="myRangeZ" onchange="moveAxis('z', this.value)">
                         </div>
                     </td>
@@ -678,11 +681,11 @@
         $.getJSON("${monitorUrl}", {deviceId: "bukito"})
             .done(function (data) {
                 // bed co ordinate on x axes (+/-)
-                var x = data.yPosition / 1000;
+                var x = -data.yPosition / 600;
                 // nozzle co ordinate on y axes
                 var y = data.xPosition / 400;
                 // crane arm co ordinate on z axes
-                var z = -data.zPosition / 300;
+                var z = data.zPosition / 300;
                 console.log("x=" + x + ", y=" + y + ", z=" + z);
                 moveBed(x);
                 moveHead(y, z);
@@ -703,6 +706,7 @@
                 });
 
                 var nozzleTemperature = data.nozzleTemperature;
+/*
                 if (nozzleTemperature > 200.0) {
                     scene.remove(normalHeadObject);
                     scene.add(redHeadObject);
@@ -712,6 +716,7 @@
 //                    scene.add(normalHeadObject);
 //                    activeHeadObject = normalHeadObject;
                 }
+*/
             });
     }
 
