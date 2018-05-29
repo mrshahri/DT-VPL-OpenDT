@@ -15,6 +15,8 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
           integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
 
     <script src="<c:url value="/resources/js/three.js"/>"></script>
 
@@ -22,7 +24,7 @@
     <script src="<c:url value="/resources/js/MTLLoader.js"/>"></script>
     <script src="<c:url value="/resources/js/OBJLoader.js"/>"></script>
 
-    <%--<script src="<c:url value="/resources/js/DragControls.js"/>"></script>--%>
+    <script src="<c:url value="/resources/js/DragControls.js"/>"></script>
     <%--<script src="<c:url value="/resources/js/TrackballControls.js"/>"></script>--%>
     <script src="<c:url value="/resources/js/Detector.js"/>"></script>
     <script src="<c:url value="/resources/js/stats.min.js"/>"></script>
@@ -69,10 +71,10 @@
         #rcorners1 {
             border-radius: 25px;
             border: 2px solid darkblue;
-            background: wheat;
+            /*background: wheat;*/
             padding: 20px;
             width: auto;
-            height: 425px;
+            height: 250px;
         }
 
         #rcorners2 {
@@ -80,7 +82,7 @@
             border: 2px solid darkblue;
             padding: 20px;
             width: auto;
-            height: 550px;
+            height: 320px;
         }
 
         .flex-container {
@@ -216,7 +218,7 @@
             var requestBody = JSON.stringify(parametersObj);
             $.ajax({
                 type: 'POST',
-                url: "${postUrl}",
+                url: "${postDeviceUrl}",
                 data: requestBody,
                 success: function (data) {
                     alert('data: ' + data);
@@ -231,7 +233,92 @@
             var requestBody = JSON.stringify(parametersObj);
             $.ajax({
                 type: 'POST',
-                url: "${postUrl}",
+                url: "${postDeviceUrl}",
+                data: requestBody,
+                success: function (data) {
+                    alert('data: ' + data);
+                },
+                contentType: "application/json",
+                dataType: 'json'
+            });
+            if (operationId === 'reset') {
+                document.getElementById("myRangeX").value = "0";
+                document.getElementById("myRangeY").value = "0";
+                document.getElementById("myRangeZ").value = "0";
+            }
+        }
+
+        var prevX = 0;
+        var prevY = 0;
+        var prevZ = 0;
+
+        function moveAxis(axis_name, value) {
+            // common value vars
+            var deviceId = 'bukito';
+            var uuid = 'Bukito01';
+            var parentComponentId = 'axes';
+            var component = 'Linear';
+            var category = 'ACTION';
+            var type = 'POSITION';
+
+            var operationId = '';
+            var operationName = '';
+            var componentId = '';
+            var componentName = '';
+
+            if (axis_name === 'x') {
+                var temp = value;
+                value = value - prevX;
+                prevX = temp;
+
+                operationId = 'moveX';
+                operationName = 'Move X Axis';
+                componentId = 'x';
+                componentName = 'X';
+                sendParameters(deviceId, uuid, operationId, parentComponentId, componentId, component, componentName, value, category, type, operationName);
+            } else if (axis_name === 'y') {
+                var temp = value;
+                value = value - prevY;
+                prevY = temp;
+
+                operationId = 'moveY';
+                operationName = 'Move Y Axis';
+                componentId = 'y';
+                componentName = 'Y';
+                sendParameters(deviceId, uuid, operationId, parentComponentId, componentId, component, componentName, value, category, type, operationName);
+            } else if (axis_name === 'z') {
+                var temp = value;
+                value = value - prevZ;
+                prevZ = temp;
+
+                operationId = 'moveZ';
+                operationName = 'Move Z Axis';
+                componentId = 'z';
+                componentName = 'Z';
+                sendParameters(deviceId, uuid, operationId, parentComponentId, componentId, component, componentName, value, category, type, operationName);
+            }
+        }
+
+        function sendParameters(deviceId, uuid, operationId, parentComponentId, componentId,
+                                component, componentName, value, category, type, name) {
+            var componentOpObj = {
+                deviceId: deviceId,
+                uuid: uuid,
+                parentComponentId: parentComponentId,
+                componentId: componentId,
+                componentName: componentName,
+                component: component,
+                operationId: operationId,
+                componentValue: value,
+                category: category,
+                type: type,
+                name: name,
+                parameters: {}
+            };
+            var requestBody = JSON.stringify(componentOpObj);
+            $.ajax({
+                type: 'POST',
+                url: "${postComponentUrl}",
                 data: requestBody,
                 success: function (data) {
                     alert('data: ' + data);
@@ -261,10 +348,10 @@
     <article class="article" id="article"></article>
 
     <aside class="article">
-        <div id="rcorners2">
+        <div id="rcorners1">
             <table>
                 <tr>
-                    <th>Operations</th>
+                    <th>Device Operations</th>
                 </tr>
                 <tr>
                     <td>
@@ -284,27 +371,37 @@
                                onclick="operatePrinting('reset')">
                     </td>
                 </tr>
+            </table>
+        </div>
+
+        <br>
+        <div id="rcorners2">
+            <table>
+                <%--Sliders--%>
+                <tr>
+                    <th>Component Operations</th>
+                </tr>
                 <tr>
                     <td>
                         <div class="slidecontainer">
-                            <p style="color: darkblue">Move X-Axes (<span id="xVal"></span>): </p>
-                            <input type="range" min="1" max="100" value="1" class="slider" id="myRangeX">
+                            <p style="color: darkblue">Move Nozzle (X-Axis) (<span id="xVal"></span>) </p>
+                            <input type="range" min="0" max="130" value="0" class="slider" id="myRangeX" onchange="moveAxis('x', this.value)">
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <div class="slidecontainer">
-                            <p style="color: darkblue">Move Y-Axes (<span id="yVal"></span>): </p>
-                            <input type="range" min="1" max="100" value="1" class="slider" id="myRangeY">
+                            <p style="color: darkblue">Move Bed (Y-Axis) (<span id="yVal"></span>) </p>
+                            <input type="range" min="0" max="160" value="0" class="slider" id="myRangeY" onchange="moveAxis('y', this.value)">
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <div class="slidecontainer">
-                            <p style="color: darkblue">Move Z-Axes (<span id="zVal"></span>): </p>
-                            <input type="range" min="1" max="100" value="1" class="slider" id="myRangeZ">
+                            <p style="color: darkblue">Move Z (<span id="zVal"></span>) </p>
+                            <input type="range" min="0" max="120" value="0" class="slider" id="myRangeZ" onchange="moveAxis('z', this.value)">
                         </div>
                     </td>
                 </tr>
@@ -342,6 +439,7 @@
     var bedObject = {}, activeHeadObject = {}, normalHeadObject = {}, redHeadObject = {};
     var craneArmObject = {}, machineAssemblyObject = {};
     var filamentAssemblyObject = {}, redFilamentAssemblyObject = {}, activeFilamentAssemblyObject = {};
+    var draggableObjects = [];
     var camera, scene, renderer;
     var mouseX = 0, mouseY = 0;
 
@@ -438,6 +536,7 @@
             objLoader.load('<c:url value="/resources/models/bed-assembly.obj"/>', function (object) {
                 bedObject = object;
                 scene.add(object);
+                draggableObjects.push(bedObject);
             }, onProgress, onError);
         });
 
@@ -486,6 +585,20 @@
         renderer.setSize(window.innerWidth / 1.75, window.innerHeight / 1.75);
         container.appendChild(renderer.domElement);
 
+        //code for dragging objects
+        var dragControls = new THREE.DragControls( draggableObjects, camera, renderer.domElement );
+        dragControls.addEventListener( 'dragstart', function ( event ) {
+            controls.enabled = false;
+            alert("Drag Started");
+        }
+        );
+        dragControls.addEventListener( 'dragend', function ( event ) {
+            controls.enabled = true;
+                alert("Drag Stopped");
+        }
+        );
+
+        //set events
         document.addEventListener('mousemove', onDocumentMouseMove, false);
         window.addEventListener('resize', onWindowResize, false);
     }
@@ -603,7 +716,7 @@
     }
 
     // code for timer
-    window.setInterval(getPrinterState, 20);
+    window.setInterval(getPrinterState, 100);
 
     /* Mouse rotation Code */
     var isDragging = false;

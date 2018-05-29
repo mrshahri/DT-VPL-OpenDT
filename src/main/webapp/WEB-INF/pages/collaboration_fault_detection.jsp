@@ -555,7 +555,7 @@
         var requestBody = JSON.stringify(parametersObj);
         $.ajax({
             type: 'POST',
-            url: "${postUrl}",
+            url: "${postDeviceUrl}",
             data: requestBody,
             success: function (data) {
                 alert('data: ' + data);

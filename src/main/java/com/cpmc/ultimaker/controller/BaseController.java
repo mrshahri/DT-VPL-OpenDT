@@ -26,7 +26,8 @@ public class BaseController {
 
     @RequestMapping(value = "/bukito", method = RequestMethod.GET)
     public String welcome1(ModelMap model) {
-        model.addAttribute("postUrl", "http://uaf132854.ddns.uark.edu:9002/virtualization-uark/operate/device");
+        model.addAttribute("postDeviceUrl", "http://uaf132854.ddns.uark.edu:9002/virtualization-uark/operate/device");
+        model.addAttribute("postComponentUrl", "http://uaf132854.ddns.uark.edu:9002/virtualization-uark/operate/component");
         model.addAttribute("monitorUrl", "http://uaf132854.ddns.uark.edu:9002/virtualization-uark/monitor");
         model.addAttribute("dataUrl", "http://uaf132854.ddns.uark.edu:9002/virtualization-uark/data");
         return "virtual_bukito";
