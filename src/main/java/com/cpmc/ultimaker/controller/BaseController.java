@@ -33,6 +33,11 @@ public class BaseController {
         return "virtual_bukito";
     }
 
+    @RequestMapping(value = "/uarm", method = RequestMethod.GET)
+    public String getUarmPage(ModelMap model) {
+        return "virtual_uarm";
+    }
+
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
     public String welcomeName(@PathVariable String name, ModelMap model) {
 
