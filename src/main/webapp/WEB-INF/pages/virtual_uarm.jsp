@@ -61,7 +61,7 @@
     var bones = {};
     var initBonesStates = {};
     var mesh;
-    var flag = 1;
+    var isBusy = 0;
 
     init();
     animate();
@@ -141,28 +141,48 @@
         controls.maxDistance = 20;
         // controls.maxPolarAngle = Math.PI / 2;
 
-        setInterval(forwardAnim, 30000);
+        setInterval(getRobotState, 100);
 
         document.addEventListener('mousemove', onDocumentMouseMove, false);
         window.addEventListener('resize', onWindowResize, false);
     }
-    
+
+    function getRobotState() {
+        $.getJSON("${monitorUrl}", {deviceId: "Uarm"}, function () {
+            console.log("success");
+        })
+            .done(function (data) {
+                var status = data.availability;
+                if (status === 'BUSY' && 0 === isBusy) {
+                    forwardAnim();
+                    isBusy = 1;
+                } else if (status === 'AVAILABLE' && 1 === isBusy) {
+                    isBusy = 0;
+                }
+            }).fail(function() {
+                console.log( "error" );
+            })
+            .always(function() {
+                console.log( "complete" );
+            });
+    }
+
     function forwardAnim() {
 
         if (typeof bones.rotator !== 'undefined') {
             new TWEEN.Tween(bones.rotator.rotation)
-                .to({ y: -Math.PI/2}, 1500)
+                .to({ y: -Math.PI/2}, 1000)
                 .onComplete(function() {
                     new TWEEN.Tween(bones.radius.rotation)
-                        .to({ y: Math.PI/12}, 1500)
+                        .to({ y: Math.PI/12}, 1000)
                         .onComplete(function () {
                             new TWEEN.Tween(bones.humerus.rotation)
-                                .to({ z:  1.25*Math.PI}, 1500)
+                                .to({ z:  1.25*Math.PI}, 1000)
                                 .onComplete(function () {
                                     new TWEEN.Tween(bones.radius.rotation)
-                                        .to({ y: Math.PI/6}, 1500)
+                                        .to({ y: Math.PI/6}, 1000)
                                         .onComplete(function () {
-                                            setTimeout(backwardAnim, 1500);
+                                            setTimeout(backwardAnim, 1000);
                                         })
                                         .start();
                                 })
@@ -176,15 +196,15 @@
 
     function backwardAnim() {
         new TWEEN.Tween(bones.rotator.rotation)
-            .to({ y: Math.PI/2}, 1500)
+            .to({ y: Math.PI/2}, 1000)
             .onComplete(function () {
                 new TWEEN.Tween(bones.radius.rotation)
-                    .to({ y: Math.PI/12}, 1500)
+                    .to({ y: Math.PI/12}, 1000)
                     .onComplete(function () {
                         new TWEEN.Tween(bones.radius.rotation)
-                            .to({ y: Math.PI/6}, 1500)
+                            .to({ y: Math.PI/6}, 1000)
                             .onComplete(function () {
-                                setTimeout(resetAnim, 1500);
+                                setTimeout(resetAnim, 1000);
                             })
                             .start();
                     })
@@ -195,13 +215,13 @@
 
     function resetAnim() {
         new TWEEN.Tween(bones.rotator.rotation)
-            .to({ y: Math.PI/45}, 1500)
+            .to({ y: Math.PI/45}, 1000)
             .onComplete(function () {
                 new TWEEN.Tween(bones.humerus.rotation)
-                    .to({ z: Math.PI}, 1500)
+                    .to({ z: Math.PI}, 200)
                     .onComplete(function () {
                         new TWEEN.Tween(bones.radius.rotation)
-                            .to({ y: -Math.PI/9}, 1500)
+                            .to({ y: -Math.PI/3}, 1000)
                             .onComplete(function () {
                                 // alert('Cycle complete');
                                 // location.reload();

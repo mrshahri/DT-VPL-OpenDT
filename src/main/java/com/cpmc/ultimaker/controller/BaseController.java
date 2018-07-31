@@ -35,6 +35,8 @@ public class BaseController {
 
     @RequestMapping(value = "/uarm", method = RequestMethod.GET)
     public String getUarmPage(ModelMap model) {
+        model.addAttribute("postUrl", "http://uaf132854.ddns.uark.edu:8100/app-ultimaker/operate-device");
+        model.addAttribute("monitorUrl", "http://uaf132854.ddns.uark.edu:9002/virtualization-uark/monitor");
         return "virtual_uarm";
     }
 
