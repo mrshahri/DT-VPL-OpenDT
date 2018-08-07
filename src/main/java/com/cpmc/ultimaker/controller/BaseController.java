@@ -40,6 +40,15 @@ public class BaseController {
         return "virtual_uarm";
     }
 
+
+    @RequestMapping(value = "/composite", method = RequestMethod.GET)
+    public String getCompositePage(ModelMap model) {
+        model.addAttribute("postUrl", "http://uaf132854.ddns.uark.edu:8100/app-ultimaker/operate-device");
+        model.addAttribute("monitorUrl", "http://uaf132854.ddns.uark.edu:9002/virtualization-uark/monitor");
+        return "virtual-composite";
+    }
+
+
     @RequestMapping(value = "/{name}", method = RequestMethod.GET)
     public String welcomeName(@PathVariable String name, ModelMap model) {
 

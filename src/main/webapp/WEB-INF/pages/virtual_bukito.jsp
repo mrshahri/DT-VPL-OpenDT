@@ -486,13 +486,13 @@
         var mtlLoader = new THREE.MTLLoader();
 
         // loading machine assmbly
-        mtlLoader.load('<c:url value="/resources/models/machine-assembly.mtl"/>', function (materials) {
+        mtlLoader.load('<c:url value="/resources/models/bukito/machine-assembly.mtl"/>', function (materials) {
 
             materials.preload();
 
             var objLoader = new THREE.OBJLoader();
             objLoader.setMaterials(materials);
-            objLoader.load('<c:url value="/resources/models/machine-assembly.obj"/>', function (object) {
+            objLoader.load('<c:url value="/resources/models/bukito/machine-assembly.obj"/>', function (object) {
                 machineAssemblyObject = object;
 
                 scene.add(object);
@@ -500,13 +500,13 @@
         });
 
         // loading filament assembly
-        mtlLoader.load('<c:url value="/resources/models/filament-reel.mtl"/>', function (materials) {
+        mtlLoader.load('<c:url value="/resources/models/bukito/filament-reel.mtl"/>', function (materials) {
 
             materials.preload();
 
             var objLoader = new THREE.OBJLoader();
             objLoader.setMaterials(materials);
-            objLoader.load('<c:url value="/resources/models/filament-reel.obj"/>', function (object) {
+            objLoader.load('<c:url value="/resources/models/bukito/filament-reel.obj"/>', function (object) {
                 filamentAssemblyObject = object;
                 activeFilamentAssemblyObject = filamentAssemblyObject;
 
@@ -515,13 +515,13 @@
         });
 
         // loading red (low) filament assembly
-        mtlLoader.load('<c:url value="/resources/models/filament-reel-red.mtl"/>', function (materials) {
+        mtlLoader.load('<c:url value="/resources/models/bukito/filament-reel-red.mtl"/>', function (materials) {
 
             materials.preload();
 
             var objLoader = new THREE.OBJLoader();
             objLoader.setMaterials(materials);
-            objLoader.load('<c:url value="/resources/models/filament-reel-red.obj"/>', function (object) {
+            objLoader.load('<c:url value="/resources/models/bukito/filament-reel-red.obj"/>', function (object) {
                 redFilamentAssemblyObject = object;
 //                activeFilamentAssemblyObject = redFilamentAssemblyObject;
 //
@@ -530,13 +530,13 @@
         });
 
         // loading bed
-        mtlLoader.load('<c:url value="/resources/models/bed_assembly.mtl"/>', function (materials) {
+        mtlLoader.load('<c:url value="/resources/models/bukito/bed-assembly.mtl"/>', function (materials) {
 
             materials.preload();
 
             var objLoader = new THREE.OBJLoader();
             objLoader.setMaterials(materials);
-            objLoader.load('<c:url value="/resources/models/bed-assembly.obj"/>', function (object) {
+            objLoader.load('<c:url value="/resources/models/bukito/bed-assembly.obj"/>', function (object) {
                 bedObject = object;
                 scene.add(object);
                 draggableObjects.push(bedObject);
@@ -544,26 +544,26 @@
         });
 
         // loading crane arm assmbly
-        mtlLoader.load('<c:url value="/resources/models/crane_arm_assembly.mtl"/>', function (materials) {
+        mtlLoader.load('<c:url value="/resources/models/bukito/crane-assembly.mtl"/>', function (materials) {
 
             materials.preload();
 
             var objLoader = new THREE.OBJLoader();
             objLoader.setMaterials(materials);
-            objLoader.load('<c:url value="/resources/models/crane-assembly.obj"/>', function (object) {
+            objLoader.load('<c:url value="/resources/models/bukito/crane-assembly.obj"/>', function (object) {
                 craneArmObject = object;
                 scene.add(object);
             }, onProgress, onError);
         });
 
         // loading hotend carriage
-        mtlLoader.load('<c:url value="/resources/models/hotend_carriage.mtl"/>', function (materials) {
+        mtlLoader.load('<c:url value="/resources/models/bukito/hotend-carriage.mtl"/>', function (materials) {
 
             materials.preload();
 
             var objLoader = new THREE.OBJLoader();
             objLoader.setMaterials(materials);
-            objLoader.load('<c:url value="/resources/models/hotend-carriage.obj"/>', function (object) {
+            objLoader.load('<c:url value="/resources/models/bukito/hotend-carriage.obj"/>', function (object) {
                 normalHeadObject = object;
                 activeHeadObject = normalHeadObject;
                 scene.add(object);
@@ -571,12 +571,12 @@
         });
 
         // loading red-hotend carriage
-        mtlLoader.load('<c:url value="/resources/models/hotend-carriage-red.mtl"/>', function (materials) {
+        mtlLoader.load('<c:url value="/resources/models/bukito/hotend-carriage-red.mtl"/>', function (materials) {
 
             materials.preload();
             var objLoader = new THREE.OBJLoader();
             objLoader.setMaterials(materials);
-            objLoader.load('<c:url value="/resources/models/hotend-carriage-red.obj"/>', function (object) {
+            objLoader.load('<c:url value="/resources/models/bukito/hotend-carriage-red.obj"/>', function (object) {
                 redHeadObject = object;
             }, onProgress, onError);
         });
