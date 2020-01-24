@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MTCommOperations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:noNamespaceSchemaLocation="../Schemas/MTCommOperations_0.3.xsd">
+    <Header bufferSize="10" instanceId="1" creationTime="2017-01-18T12:00:00" sender="Ultimaker2" version="0.1" firstSequence="9" lastSequence="9"
+            nextSequence="10"/>
+    <Operations>
+        <Device uuid="#1" name="Uarm">
+            <DeviceOperation id="#1" name="Uarm">
+                <Jobs>
+
+                    <Moving operationId="startJob" name="Start new job" sequence="9" timestamp="2017-01-18T05:45:40">
+
+                        <Parameters>
+
+                            <Object id="objName" name="Object Name" timestamp="2017-01-18T05:45:40">default</Object>
+
+                        </Parameters>
+
+                    </Moving>
+                </Jobs>
+            </DeviceOperation>
+        </Device>
+    </Operations>
+</MTCommOperations>
