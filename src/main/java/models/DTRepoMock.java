@@ -9,17 +9,17 @@ import java.util.List;
  *
  */
 public class DTRepoMock {
-    private List<DigitalTwin> digitalTwins;
+    private List<MockDigitalTwin> mockDigitalTwins;
 
     public DTRepoMock() {
         // initiate the list
-        digitalTwins = new ArrayList<>();
+        mockDigitalTwins = new ArrayList<>();
 
         // DT Bukito
-        DigitalTwin bukitoDT = new DigitalTwin();
+        MockDigitalTwin bukitoDT = new MockDigitalTwin();
         bukitoDT.setDigitalTwinId("bukito");
         bukitoDT.setDigitalTwinName("Bukito 3D Printer");
-        bukitoDT.setAssemblyLine(new ArrayList<DigitalTwin>());
+        bukitoDT.setAssemblyLine(new ArrayList<MockDigitalTwin>());
         bukitoDT.setMonitorUrl("");
         bukitoDT.setOperationUrl("");
         bukitoDT.setOperations(new ArrayList<String>());
@@ -30,13 +30,13 @@ public class DTRepoMock {
         modelUrls.add("/resources/models/bukito/machine-assembly");
         bukitoDT.setModelURLs(modelUrls);
         bukitoDT.setPreviewImageUrl("/resources/images/bukito.jpg");
-        digitalTwins.add(bukitoDT);
+        mockDigitalTwins.add(bukitoDT);
 
         // DT UARM 1
-        DigitalTwin uarmDT = new DigitalTwin();
+        MockDigitalTwin uarmDT = new MockDigitalTwin();
         uarmDT.setDigitalTwinId("uarm");
         uarmDT.setDigitalTwinName("UARM Robotic Arm");
-        uarmDT.setAssemblyLine(new ArrayList<DigitalTwin>());
+        uarmDT.setAssemblyLine(new ArrayList<MockDigitalTwin>());
         uarmDT.setMonitorUrl("");
         uarmDT.setOperationUrl("");
         bukitoDT.setOperations(new ArrayList<String>());
@@ -44,7 +44,7 @@ public class DTRepoMock {
         modelUrls.add("/resources/models/uarm/uarm-single-assembly");
         uarmDT.setModelURLs(modelUrls);
         uarmDT.setPreviewImageUrl("/resources/models/uarm.jpg");
-        digitalTwins.add(uarmDT);
+        mockDigitalTwins.add(uarmDT);
 
         // DT UARM 2
 
@@ -53,11 +53,11 @@ public class DTRepoMock {
         // DT XCarve
     }
 
-    public List<DigitalTwin> getDigitalTwins() {
-        return digitalTwins;
+    public List<MockDigitalTwin> getMockDigitalTwins() {
+        return mockDigitalTwins;
     }
 
-    public void setDigitalTwins(List<DigitalTwin> digitalTwins) {
-        this.digitalTwins = digitalTwins;
+    public void setMockDigitalTwins(List<MockDigitalTwin> mockDigitalTwins) {
+        this.mockDigitalTwins = mockDigitalTwins;
     }
 }

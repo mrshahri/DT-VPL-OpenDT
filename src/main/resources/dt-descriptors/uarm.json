@@ -1,0 +1,20 @@
+{
+  "id": "uarm",
+  "name": "UArm",
+  "primaryType": "robotic-arm",
+  "secondaryType": "moving",
+  "services": [
+    {
+      "serviceName": "coordinates",
+      "url": "",
+      "type": "monitoring",
+      "scope": "single-service"
+    },
+    {
+      "serviceName": "move",
+      "url": "",
+      "type": "operation-control",
+      "scope": "single-service"
+    }
+  ]
+}

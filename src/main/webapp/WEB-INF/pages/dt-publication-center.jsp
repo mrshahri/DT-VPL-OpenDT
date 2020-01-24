@@ -58,14 +58,12 @@
                     // Code to display the response.
                     alert(data);
                     window.location.reload();
+                },
+                error: function (err) {
+                    alert(err.responseText)
                 }
             });
         }
-
-        $("#dtPublishForm").submit(function (e) {
-            e.preventDefault();
-        });
-
 
     </script>
 </head>

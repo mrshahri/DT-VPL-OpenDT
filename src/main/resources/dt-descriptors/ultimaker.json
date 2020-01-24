@@ -1,3 +1,39 @@
 {
-  "test":"test"
+  "id": "bukito",
+  "name": "Bukito",
+  "primaryType": "additive-manufacturing",
+  "secondaryType": "3d printing, plastic",
+  "services": [
+    {
+      "serviceName": "temperature",
+      "url": "",
+      "type": "monitoring",
+      "scope": "single-service"
+    },
+    {
+      "serviceName": "coordinates",
+      "url": "",
+      "type": "monitoring",
+      "scope": "single-service"
+    },
+    {
+      "serviceName": "monitoring",
+      "url": "",
+      "type": "monitoring",
+      "scope": "mashup-service",
+      "config": ["temperature", "coordinates"]
+    },
+    {
+      "serviceName": "print",
+      "url": "",
+      "type": "operation-control",
+      "scope": "single-service"
+    },
+    {
+      "serviceName": "stop",
+      "url": "",
+      "type": "operation-control",
+      "scope": "single-service"
+    }
+  ]
 }

@@ -24,13 +24,14 @@ public class DTMashupCenter {
     }
 
     @RequestMapping(value = "publish", method = RequestMethod.POST)
-    public ResponseEntity publishDigitalTwin(@RequestBody DTModel dtModel) {
+    public ResponseEntity publishDigitalTwin(@RequestBody DTModel dtModel, ModelMap model) {
         if (isNullorEmpty(dtModel.getDtName()) || isNullorEmpty(dtModel.getDtEndpoint())) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         dtModel.setDtId(UUID.randomUUID().toString());
         DTStorageManager dtStorageManager = new DTStorageManager();
         dtStorageManager.insertDTModel(dtModel);
+        model.addAttribute("publishedDTs", dtStorageManager.getExistingDTModels());
         dtStorageManager.persist();
         return new ResponseEntity(dtModel, HttpStatus.OK);
     }

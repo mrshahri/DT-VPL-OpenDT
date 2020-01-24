@@ -1,3 +1,39 @@
 {
-  "test":"test"
+  "id": "xcarve",
+  "name": "XCarve",
+  "primaryType": "subtractive-manufacturing",
+  "secondaryType": "Machining, Milling, Cutting",
+  "services": [
+    {
+      "serviceName": "spindle-speed",
+      "url": "",
+      "type": "monitoring",
+      "scope": "single-service"
+    },
+    {
+      "serviceName": "coordinates",
+      "url": "",
+      "type": "monitoring",
+      "scope": "single-service"
+    },
+    {
+      "serviceName": "monitoring",
+      "url": "",
+      "type": "monitoring",
+      "scope": "mashup-service",
+      "config": ["spindle-speed", "coordinates"]
+    },
+    {
+      "serviceName": "drill",
+      "url": "",
+      "type": "operation-control",
+      "scope": "single-service"
+    },
+    {
+      "serviceName": "stop",
+      "url": "",
+      "type": "operation-control",
+      "scope": "single-service"
+    }
+  ]
 }
