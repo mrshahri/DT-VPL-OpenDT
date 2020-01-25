@@ -9,15 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("ultimaker")
-public class UltimakerTwinController {
+@RequestMapping("uarm")
+public class UARMTwinController {
 
-    private static String twiName = "ultimaker";
+    private static String twiName = "uarm";
 
     @RequestMapping(value = "descriptor", method = RequestMethod.GET)
     public ResponseEntity getDescriptor() {
-        DigitalTwin ultimakerTwin = DigitalTwinFactory.createDigitalTwin(twiName);
-        return new ResponseEntity(ultimakerTwin, HttpStatus.OK);
+        DigitalTwin uarmTwin = DigitalTwinFactory.createDigitalTwin(twiName);
+        return new ResponseEntity(uarmTwin, HttpStatus.OK);
     }
-
 }

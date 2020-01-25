@@ -36,6 +36,11 @@ public class DTMashupCenter {
         return new ResponseEntity(dtModel, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "creation", method = RequestMethod.GET)
+    public String getMashupCreationCenter() {
+        return "dt-mashup-creation-center";
+    }
+
     private boolean isNullorEmpty(String string) {
         if (string == null || string.equals("")) {
             return true;
