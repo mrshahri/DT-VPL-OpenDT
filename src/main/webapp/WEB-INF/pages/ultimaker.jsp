@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>VPL: Ultimaker-UARM-XCarve</title>
+    <title>Virtual Factory of CPMC</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <style>
@@ -128,8 +128,7 @@
 
         // loading UARM model
         var loader = new THREE.GLTFLoader();
-        loader.load('<c:url value="/resources/models/ultimaker-uarm-xcarve/composite-ultimaker-uarm-xcarve.gltf"/>', function (compgltf) {
-        <%--loader.load('<c:url value="/resources/models/virtual-factory/virtual-factory.gltf"/>', function (compgltf) {--%>
+        loader.load('<c:url value="/resources/models/ultimaker/ultimaker.gltf"/>', function (compgltf) {
             compgltf.scene.traverse(function (child) {
                 console.log(child.name);
                 if (child.isBone) {
@@ -289,11 +288,11 @@
         controls.maxDistance = 100;
         // controls.maxPolarAngle = Math.PI / 2;
 
-        setInterval(getUarm1Status, 100);
-        setInterval(getUarm2Status, 100);
+        // setInterval(getUarm1Status, 100);
+        // setInterval(getUarm2Status, 100);
         // setInterval(getBukitoState, 200);
         setInterval(getUltimaker2State, 200);
-        setInterval(getXCarveState, 200);
+        // setInterval(getXCarveState, 200);
 
         // TEST
         // setInterval(function () {
@@ -658,28 +657,28 @@
             })
             .start();
     }
-/*
-    function backwardAnim(armature) {
-        new TWEEN.Tween(armature.rotator.rotation)
-            .to({y: 0}, 1000)
-            .onComplete(function () {
-                new TWEEN.Tween(armature.radius.rotation)
-                    .to({y: Math.PI / 180}, 1000)
-                    .onComplete(function () {
-                        new TWEEN.Tween(armature.radius.rotation)
-                            .to({y: Math.PI / 6}, 1000)
-                            .onComplete(function () {
-                                setTimeout(function () {
-                                    resetAnim(armature);
-                                }, 1000);
-                            })
-                            .start();
-                    })
-                    .start();
-            })
-            .start();
-    }
-*/
+    /*
+        function backwardAnim(armature) {
+            new TWEEN.Tween(armature.rotator.rotation)
+                .to({y: 0}, 1000)
+                .onComplete(function () {
+                    new TWEEN.Tween(armature.radius.rotation)
+                        .to({y: Math.PI / 180}, 1000)
+                        .onComplete(function () {
+                            new TWEEN.Tween(armature.radius.rotation)
+                                .to({y: Math.PI / 6}, 1000)
+                                .onComplete(function () {
+                                    setTimeout(function () {
+                                        resetAnim(armature);
+                                    }, 1000);
+                                })
+                                .start();
+                        })
+                        .start();
+                })
+                .start();
+        }
+    */
 
     function resetAnim(armature) {
         new TWEEN.Tween(armature.rotator.rotation)

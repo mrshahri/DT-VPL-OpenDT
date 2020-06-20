@@ -1,17 +1,14 @@
-package com.cpmc.ultimaker.controller;
+package com.cpmc.controllers;
 
-import models.DTRepoMock;
+import com.cpmc.models.DTRepoMock;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.xml.ws.Response;
 
 /**
  * Created by Rakib on 5/25/2017.
@@ -75,6 +72,13 @@ public class BaseController {
         model.addAttribute("postUrl", baseUrl + ":8100/app-ultimaker/operate-device");
         model.addAttribute("monitorUrl", baseUrl + ":9002/virtualization-uark/monitor");
         return "virtual-composite";
+    }
+
+    @RequestMapping(value = "/bukito-ultimaker", method = RequestMethod.GET)
+    public String getBukitoUltimaker(ModelMap model) {
+        model.addAttribute("postUrl", baseUrl + ":8100/app-ultimaker/operate-device");
+        model.addAttribute("monitorUrl", baseUrl + ":9002/virtualization-uark/monitor");
+        return "bukito-ultimaker";
     }
 
 /*

@@ -1,4 +1,4 @@
-package utils;
+package com.cpmc.utils;
 
 public class MALConfigurator {
     /**

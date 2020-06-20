@@ -1,8 +1,8 @@
-package utils;
+package com.cpmc.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
-import models.DTModel;
+import com.cpmc.models.DTModel;
 
 import java.io.File;
 import java.io.FileReader;
@@ -12,13 +12,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DTStorageManager {
+public class DTPlatformManager {
 
     private String fileName = "/storage/published-dt.json";
     private Gson gson;
     private List<DTModel> models;
 
-    public DTStorageManager() {
+    public DTPlatformManager() {
         gson = new Gson();
         models = new ArrayList<>();
         try {
@@ -34,8 +34,18 @@ public class DTStorageManager {
         }
     }
 
-    public List<DTModel> getExistingDTModels () {
+    public List<DTModel> getAllModels() {
         return this.models;
+    }
+
+    public DTModel getDT(String dtId) {
+        DTModel dtModel = new DTModel();
+        for (DTModel model: this.models) {
+            if (model.getDtName().equals(dtId)) {
+                return model;
+            }
+        }
+        throw new RuntimeException("DT not found");
     }
 
     public void insertDTModel (DTModel model) {

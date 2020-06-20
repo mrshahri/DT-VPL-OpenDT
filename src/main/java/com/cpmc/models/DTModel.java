@@ -1,4 +1,7 @@
-package models;
+package com.cpmc.models;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 public class DTModel {
     private String dtId;
@@ -75,5 +78,31 @@ public class DTModel {
 
     public void setScope(String scope) {
         this.scope = scope;
+    }
+
+    public String getData(String param) {
+        if (param==null || param.isEmpty()) {
+            throw new IllegalArgumentException("Request parameter not valid");
+        }
+        final String uri = "http://localhost:9002/virtualization-uark/monitor?deviceId=" + dtName;
+        RestTemplate restTemplate = new RestTemplate();
+        Monitor monitor = restTemplate.getForObject(uri, Monitor.class);
+        if ("nozzleTemperature".equals(param)) {
+            return monitor.getNozzleTemperature();
+        } else if ("bedTemperature".equals(param)) {
+            return monitor.getBedTemperature();
+        } else if ("progress".equals(param)) {
+            return monitor.getProgress();
+        } else {
+            return "Data item not found. Please check item name.";
+        }
+    }
+
+    public String invokeService(String param) {
+        String jsonString = "{\"deviceId\":\""+ dtName + "\", \"operationId\":\"reset\", \"parameters\":[]}";
+        final String uri = "http://localhost:9002/virtualization-uark/operate/device";
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForEntity(uri, jsonString, ResponseEntity.class);
+        return "Success";
     }
 }

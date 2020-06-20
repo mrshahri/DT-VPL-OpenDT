@@ -71,7 +71,7 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <h3 align="center">Digital Twin Publishing Center</h3>
+        <h3 align="center">DT Publication Center</h3>
     </div>
     <div class="row justify-content-center">
         <div class="col col-12">
@@ -114,9 +114,8 @@
                                 <label for="inputScope">Scope</label>
                                 <select id="inputScope" class="form-control">
                                     <option selected>Choose...</option>
-                                    <option>Single Purpose API</option>
-                                    <option>Aggregate API</option>
-                                    <option>Microservice API</option>
+                                    <option>Single DT</option>
+                                    <option>Composite DT</option>
                                 </select>
                             </div>
                         </div>

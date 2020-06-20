@@ -1,11 +1,17 @@
 {
-  "id": "bukito",
-  "name": "Bukito",
+  "id": "Ultimaker01",
+  "name": "Ultimaker2",
   "primaryType": "additive-manufacturing",
   "secondaryType": "3d printing, plastic",
   "services": [
     {
-      "serviceName": "temperature",
+      "serviceName": "bedTemperature",
+      "url": "",
+      "type": "monitoring",
+      "scope": "single-service"
+    },
+    {
+      "serviceName": "nozzleTemperature",
       "url": "",
       "type": "monitoring",
       "scope": "single-service"

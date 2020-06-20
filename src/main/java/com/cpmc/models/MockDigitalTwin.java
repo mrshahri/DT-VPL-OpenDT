@@ -1,4 +1,4 @@
-package models;
+package com.cpmc.models;
 
 import java.util.List;
 

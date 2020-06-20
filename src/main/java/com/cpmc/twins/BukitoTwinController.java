@@ -1,7 +1,7 @@
-package com.cpmc.ultimaker.controller;
+package com.cpmc.twins;
 
-import models.DigitalTwin;
-import models.DigitalTwinFactory;
+import com.cpmc.models.DigitalTwin;
+import com.cpmc.models.DigitalTwinFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

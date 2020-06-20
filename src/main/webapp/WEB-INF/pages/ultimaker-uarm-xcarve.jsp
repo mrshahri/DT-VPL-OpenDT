@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Ultimaker-UARM-XCarve</title>
+    <title>VPL: Ultimaker-UARM-XCarve</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <style>
@@ -93,7 +93,7 @@
 
         // camera
         camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 300);
-        camera.position.x = 300;
+        camera.position.x = 500;
         camera.position.y = 0;
         camera.position.z = 0;
 

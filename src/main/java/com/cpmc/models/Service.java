@@ -1,4 +1,4 @@
-package models;
+package com.cpmc.models;
 
 public class Service {
     private String serviceName;
